@@ -1,4 +1,4 @@
-class Login {
+export default class Login {
 
 	constructor ( ) {
 

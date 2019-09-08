@@ -1,4 +1,4 @@
-class Router { 
+export default class Router { 
 
 	#pathParts;
 	#pageJS;
@@ -23,4 +23,4 @@ class Router {
 
 }
 
-const router = new Router( );
+// const router = new Router( );
