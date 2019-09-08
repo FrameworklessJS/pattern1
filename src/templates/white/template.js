@@ -1,10 +1,11 @@
-import Nav from "/dist/components/nav.js";
+import Nav from "../../components/nav.js";
+import { BASEDIR } from "../../app.js";
 
 export default class TemplateWhite {
 
 	#template = `
-		<link rel="stylesheet" type="text/css" href="/dist/styles/reset.css" />
-		<link rel="stylesheet" type="text/css" href="/dist/templates/white/styles.css" />
+		<link rel="stylesheet" type="text/css" href="${BASEDIR}styles/reset.css" />
+		<link rel="stylesheet" type="text/css" href="${BASEDIR}templates/white/styles.css" />
 		
 		<header></header>
 		<content></content>
@@ -13,6 +14,8 @@ export default class TemplateWhite {
 	constructor ( ) {
 	
 		console.log( "templates/white.js" );
+
+		//super( );
 
 		document.body.insertAdjacentHTML( "afterbegin", this.#template );
 

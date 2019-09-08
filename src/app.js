@@ -1,9 +1,11 @@
-import Login from "/dist/components/login.js";
-import Router from "/dist/libraries/router.js";
-import User from "/dist/libraries/user.js";
+import Login from "./components/login.js";
+import Router from "./libraries/router.js";
+import User from "./libraries/user.js";
 
 const router = new Router( );
 const user = new User( );
+
+export const BASEDIR = import.meta.url.replace( `${window.location.protocol}//${window.location.host}`, "" ).replace( "app.js", "" );
 
 class App {
 
@@ -19,13 +21,13 @@ class App {
 
 			await user.getAuth( );
 
-			let Template = await import( "/dist/templates/white/template.js" );
+			let Template = await import( "./templates/white/template.js" );
 			
 			const template = new Template.default( );
 
 			await template.init( );
 
-			let Page = await import( `/dist/pages/${router.pageJS}` );
+			let Page = await import( `./pages/${router.pageJS}` );
 
 			const page = new Page.default( );
 
