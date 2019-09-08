@@ -19,7 +19,7 @@ class App {
 
 			await user.getAuth( );
 
-			let Template = await import( "/dist/templates/white.js" );
+			let Template = await import( "/dist/templates/white/template.js" );
 			
 			const template = new Template.default( );
 

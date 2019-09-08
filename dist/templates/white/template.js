@@ -3,6 +3,9 @@ import Nav from "/dist/components/nav.js";
 export default class TemplateWhite {
 
 	#template = `
+		<link rel="stylesheet" type="text/css" href="/dist/styles/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/dist/templates/white/styles.css" />
+		
 		<header></header>
 		<content></content>
 	`;
