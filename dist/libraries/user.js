@@ -18,24 +18,32 @@ export default class User {
 
 		return new Promise ( async ( resolve, reject ) => {
 			
-			/**
 			var xhr = new XMLHttpRequest( );
 
-			xhr.onreadystatechange = ( data ) => {
+			xhr.onload = function( data ) {
 
-				console.log( data );
+				let response = JSON.parse( xhr.response );
 
-			}
+				if ( response.auth.status === "fail" ) {
+
+					reject( response.auth.message );
+
+				} else {
+
+					resolve( );
+
+				}
+
+			};
+
+			xhr.onerror = function() { 
+
+				reject( "Auth Request Failed" );
+
+			};
 
 			xhr.open( 'GET', `server.php`, true );
 			xhr.send( );
-			*/
-
-			//return false;
-			//return true;
-
-			//reject( 'PERMISSION DENIED!!!' );
-			resolve( );
 
 		} );
 
