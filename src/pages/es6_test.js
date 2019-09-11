@@ -1,3 +1,6 @@
+import XHR from "../libraries/xhr.js";
+import Table from "../components/table.js";
+
 export default class ES6TestClass {
 
 	constructor ( ) {
@@ -18,46 +21,41 @@ export default class ES6TestClass {
 
 	}
 
-	buildTableHTML ( ) {
+	async buildTableHTML ( ) {
 
-		let i = 1;
-		let rows = ``;
+		let xhr = new XHR(
+			"GET",
+			`/test/data/table.php`,
+			true
+		);
 
-		while ( i <= 100 ) {
+		let data = await xhr.call( );
+		data = JSON.parse( data );
 
-			rows = `${rows}
-				<tr>
-					<td>Row ${i} Col 1</td>
-                    <td>Row ${i} Col 2</td>
-                    <td>Row ${i} Col 3</td>
-				</tr>
-			`;
+window.ES6TABLEDATA = data;
 
-			i++;
+		let table = new Table( {
+			bindValues: true
+		} );
 
-		}
+		table.setHeader( {
+			"email" : { display: "Email" },
+			"name" : {
+				display: "Name",
+				fields: [
+					"name.first",
+					"name.last"
+				]
+			}
+		} );
+		table.setBody( data );
 
-		let table = `
-			<table>
-				<thead>
-					<tr>
-						<th>Col 1</th>
-						<th>Col 2</th>
-						<th>Col 3</th>
-					</tr>
-				</thead>
-				<tbody>
-					${rows}
-				</tbody>
-			</table>
-		`;
-
-        document.querySelector( "content" )
-            .insertAdjacentHTML(
-                "beforeend",
-            	table
+		document.querySelector( "content" )
+			.insertAdjacentHTML(
+				"beforeend", 
+				table.render( )
 			);
-
+	
 	}
 
 }

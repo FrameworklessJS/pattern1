@@ -42,7 +42,7 @@ export default class User {
 
 			};
 
-			xhr.open( 'GET', `server.php`, true );
+			xhr.open( 'GET', `/test/data/login.php`, true );
 			xhr.send( );
 
 		} );
