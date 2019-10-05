@@ -1,3 +1,5 @@
+import Binding from "../libraries/binding.js";
+
 export default class Table {
 
 	#html = '';
@@ -51,9 +53,9 @@ export default class Table {
 
 	}
 
-	setBody ( body ) {
+	setBody ( jsonData ) {
 
-		const entries = Object.entries( body );
+		const entries = Object.entries( jsonData );
 
 		for ( const [ key, value ] of entries ) {
 
@@ -67,6 +69,7 @@ export default class Table {
 			for ( const [ hkey, hvalue ] of headers ) {
 
 				let rowValue = '';
+				let binding = false;
 
 				if ( hvalue.fields !== undefined ) {
 				
@@ -83,15 +86,23 @@ export default class Table {
 					} );
 				
 				} else {
-				
+
 					rowValue = value[hkey];
 				
+					binding = new Binding( jsonData[ key ], hkey );
+
 				}
 
 				this.#bodyRows = `
 					${this.#bodyRows}
-					<td>${rowValue}</td>
+					<td id="${hkey}${key}">${rowValue}</td>
 				`;
+
+				if ( binding !== false ) {
+				
+					binding.bindTo( `#${hkey}${key}`, "innerHTML", "DOMSubtreeModified" );
+
+				}
 
 			}
 

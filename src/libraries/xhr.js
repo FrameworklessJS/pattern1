@@ -28,7 +28,7 @@ export default class XHR {
 
 			xhr.onerror = function( ) {
 			
-				reject( "AJAX Request Failed" );
+				reject( new Error( xhr.response ) );
 			
 			}
 

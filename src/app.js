@@ -35,7 +35,7 @@ class App {
 
 		} catch ( err ) {
 
-			console.error( `ERROR: ${err}` );
+			console.error( err );
 
 		}
 

@@ -1,3 +1,5 @@
+import XHR from "../libraries/xhr.js"
+
 export default class User { 
 
 	#authorized;
@@ -14,36 +16,36 @@ export default class User {
 
 	}
 
-	async getAuth ( ) {
+	getAuth ( ) {
 
 		return new Promise ( async ( resolve, reject ) => {
+	
+			let response;
+			let xhr = new XHR(
+				'GET', 
+				`/test/data/login.php`, 
+				true
+			)
+
+			try {
+
+				response = JSON.parse( await xhr.call( ) );
+
+			} catch ( err ) {
 			
-			var xhr = new XMLHttpRequest( );
+				reject( new Error( err ) );
 
-			xhr.onload = function( data ) {
+			}
 
-				let response = JSON.parse( xhr.response );
+			if ( response.auth.status === "fail" ) {
 
-				if ( response.auth.status === "fail" ) {
+				reject( new Error( response.auth.message ) );
 
-					reject( response.auth.message );
+			} else {
 
-				} else {
+				resolve( );
 
-					resolve( );
-
-				}
-
-			};
-
-			xhr.onerror = function() { 
-
-				reject( "Auth Request Failed" );
-
-			};
-
-			xhr.open( 'GET', `/test/data/login.php`, true );
-			xhr.send( );
+			}
 
 		} );
 
