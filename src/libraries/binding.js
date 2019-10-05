@@ -1,7 +1,9 @@
 export default class Binding {
 
 	#value;
+	#binding;
 	#elementBindings = [];
+	#boundFunction;
 
     constructor ( scope, prop ) {
 
@@ -33,7 +35,7 @@ export default class Binding {
 
 	}
 
-	valueSetter ( value ) {
+	valueSetter ( value, callback = null ) {
 
 		/**
 		 * TODO: There is an issue when the value is a boolean from a select tag
@@ -47,11 +49,17 @@ export default class Binding {
 
 		this.#elementBindings.forEach( ( v, k ) => {
 
-			let binding = this.#elementBindings[ k ];
+			this.#binding = this.#elementBindings[ k ];
 
-			binding.element[ binding.attribute ] = value
+			this.#binding.element[ this.#binding.attribute ] = value
 
 		} );
+
+		if ( callback ) {
+		
+			callback( );
+
+		}
 
     }
 
@@ -116,43 +124,50 @@ export default class Binding {
 
 	}
 
+	bindFunction( ) {
+
+		let callback_function = null;
+
+		/**
+		 * Need to remove and add back eventListener
+		 * To Prevent recursion on events likes DOMSubtreeModified
+		 */
+		switch ( this.#binding.event ) {
+
+			case 'DOMSubtreeModified':
+			
+				this.#binding.element.removeEventListener( this.#binding.event, this.#boundFunction, false );
+
+				callback_function = ( ) => {
+            
+            		this.#binding.element.addEventListener( this.#binding.event, this.#boundFunction, false);
+        
+        		}
+
+			break;
+
+		}
+
+		this.valueSetter( this.#binding.element[ this.#binding.attribute ], callback_function );
+
+	}
+
 	bindElement( element, attribute, event = null ) {
 
-		let binding = {
+		this.#binding = {
+			event: event,
 			element: element,
             attribute: attribute
         }
 
-        if ( event ) {
+        if ( this.#binding.event ) {
 
-			/*let once = true;
-            binding.element.addEventListener( event, ( event ) => {
+			this.#boundFunction = this.bindFunction.bind( this );
+            this.#binding.element.addEventListener( this.#binding.event, this.#boundFunction, false);
+        
+		}
 
-				/**
-				 * This is a hack to get DOMSubtreeModified to fire only once
-				 * Generally used for deteched innerHTML changes
-				 */
-				/*if ( once ) {
-
-					once = false;
-
-				} else {
-
-					once = true;
-					return;
-
-				}
-
-                this.valueSetter( binding.element[ attribute ] );
-
-            } );*/
-
-            binding.event = event
-        }
-
-		this.#elementBindings.push( binding );
-
-        //binding.element[ attribute ] = this.#value;
+		this.#elementBindings.push( this.#binding );
 
         return this;
 

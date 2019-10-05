@@ -17,7 +17,7 @@ class App {
 
 	async init ( ) {
 
-		try {
+		//try {
 
 			await user.getAuth( );
 
@@ -33,11 +33,11 @@ class App {
 
 			page.init( );
 
-		} catch ( err ) {
+		/*} catch ( err ) {
 
 			console.error( err );
 
-		}
+		}*/
 
 	}
 
