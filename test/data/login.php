@@ -9,6 +9,6 @@
 
 	},
 
-	"jwt" : true,
-	"jwt-notes" : "if pass should provide json web token for auth"
+	"body-notes": "Returns object or whatever the frontend is expecting",
+	"body" : true
 }

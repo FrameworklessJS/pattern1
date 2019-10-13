@@ -11,6 +11,14 @@ export default class Router {
 
 		let page = this.#pathParts.slice(-1)[0];
 
+		if ( page.length <= 0 ) {
+		
+			page = 'index.';
+
+		}
+
+		console.log(page);
+
 		this.#pageJS = `${page.substr( 0, page.lastIndexOf( '.' ) )}.js`;
 
 	}

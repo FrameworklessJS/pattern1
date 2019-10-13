@@ -20,13 +20,13 @@ export default class XHR {
 		
 			var xhr = new XMLHttpRequest( );
 
-			xhr.onload = function( ) {
+			xhr.onload = ( ) => {
 
 				resolve( xhr.response );
 
 			}
 
-			xhr.onerror = function( ) {
+			xhr.onerror = ( ) => {
 			
 				reject( new Error( xhr.response ) );
 			

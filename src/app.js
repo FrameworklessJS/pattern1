@@ -17,7 +17,12 @@ class App {
 
 	async init ( ) {
 
-		//try {
+		/**
+		 * Still deciding to use an try catch at this level
+		 * Problem is if there is a js error in one of the 
+		 * Imported scripts the stacktrace is innacturate
+		 */
+		try {
 
 			await user.getAuth( );
 
@@ -31,13 +36,26 @@ class App {
 
 			const page = new Page.default( );
 
-			page.init( );
+			/**
+			 * Technically we don't need an init( ) method
+			 * We could just use the constructor BUT
+			 * A constructor should be used to set up the class
+			 * Not used to set up the HTML page like what our init( ) does
+			 * So to keep things tidy we'll use an init( ) method
+			 */
+			if ( "init" in page) {
+		
+				console.log( page.init );
 
-		/*} catch ( err ) {
+				page.init( );
+			
+			}
+
+		} catch ( err ) {
 
 			console.error( err );
 
-		}*/
+		}
 
 	}
 
