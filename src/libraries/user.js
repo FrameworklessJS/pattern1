@@ -1,4 +1,5 @@
 import XHR from "../libraries/xhr.js"
+import { BASEDIR } from "../app.js";
 
 export default class User { 
 
@@ -23,7 +24,7 @@ export default class User {
 			let response;
 			let xhr = new XHR(
 				'GET', 
-				`/test/data/login.php`, 
+				`${BASEDIR}../test/data/login.php`, 
 				true
 			)
 
